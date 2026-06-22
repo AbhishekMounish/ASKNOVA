@@ -31,6 +31,7 @@ userRouter.post("/user/signup", async (req,res)=>{
             password:hashedPassword
         })
         await newuser.save();
+        console.log("User saved:", newuser);
         const token = jwt.sign({id:newuser._id},
             process.env.JWT_SECRECT,{
                 expiresIn:"7d"
@@ -56,6 +57,7 @@ userRouter.post("/user/signin" ,async (req,res)=>{
     const {email,password}=req.body;
     try{
         const user = await User.findOne({email});
+        console.log("Login found user:", user);
         if(!user){
             return res.status(400).json({
                 message:"Invalid creaditials",
